@@ -53,7 +53,7 @@ export function Results({ result, currentStreak, bestStreak }: Props) {
   return (
     <section className="py-10 max-[480px]:pt-[34px]">
       <h1 className="mb-1 mt-6 text-[74px] font-semibold leading-none tracking-[-5px] max-[480px]:text-[66px]">{result.score}<span className="text-[22px] font-normal tracking-normal text-zinc-400"> / 500</span></h1>
-      <p className="mb-[22px] text-zinc-600">{result.score >= 400 ? 'Freaky freak.' : result.score >= 250 ? 'A few good catches.' : 'There’s always tomorrow.'}</p>
+      <p className="mb-[22px] text-zinc-600">{result.score >= 250 ? 'Freaky freak.' : result.score >= 150 ? 'A few good catches.' : 'There’s always tomorrow.'}</p>
       <div className="mb-3 overflow-hidden rounded-2xl border border-zinc-200 bg-white font-mono">
         <div className="flex items-center justify-between bg-zinc-900 px-4 py-2.5 text-[11px] tracking-[1.5px] text-zinc-100">
           <span>SCOTTLE #{result.puzzle}</span>
