@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-scottle: #2a9cd3;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace; */
+  --animate-arrive: arrive 200ms ease-out both;
+  --animate-score-rise: score-rise 900ms ease-out both;
+  --animate-press: press 220ms ease-out;
+  --animate-shake: shake 220ms ease-out;
+  --animate-fade: fade 150ms ease-out;
+  --animate-curtain: curtain-reveal 2400ms ease-in-out forwards;
+  --animate-cat-fall: cat-fall 1800ms linear infinite;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  @keyframes arrive {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes score-rise {
+    0% { opacity: 0; transform: translateY(4px) scale(.8); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-24px) scale(1.05); }
+  }
+
+  @keyframes press {
+    50% { transform: scale(.97); box-shadow: 0 0 0 5px #368c5225; }
+  }
+
+  @keyframes shake {
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes curtain-reveal {
+    from { background-color: #2a9cd3b8; backdrop-filter: blur(7px); }
+    to { background-color: #2a9cd31a; backdrop-filter: blur(0); }
+  }
+
+  @keyframes cat-fall {
+    from { transform: translateY(-10vh) rotate(-12deg); }
+    to { transform: translateY(115vh) rotate(16deg); }
+  }
+  @keyframes bubble-loop {
+    0%   { opacity: 0; transform: translateY(14px) scale(0.6); }
+    5%   { opacity: 1; transform: translateY(0) scale(1.04); }
+    8%   { transform: scale(1); }
+    80%  { opacity: 1; transform: scale(1); }
+    92%  { opacity: 0; transform: scale(1); }
+    100% { opacity: 0; }
+  }
+}
+
+@layer base {
+  body {
+    @apply min-h-screen min-w-[320px] bg-white font-sans text-zinc-900 antialiased;
+  }
+
+  *,
+  *::before,
+  *::after {
+    @apply box-border;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: .01ms !important;
+    }
+  }
+}
