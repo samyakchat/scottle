@@ -1,4 +1,4 @@
-const cats = ['😹', '😸', '😹', '😂']
+const cats = ['😹', '😸']
 
 export function CatWaterfall() {
   return (

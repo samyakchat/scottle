@@ -3,12 +3,10 @@ import { Button } from './Button'
 
 type Props = { title: string; eyebrow: string; onClose: () => void; children: ReactNode }
 
-export function Modal({ title, eyebrow, onClose, children }: Props) {
+export function Modal({ title, onClose, children }: Props) {
   return (
     <div className="fixed inset-0 z-20 grid place-items-center bg-zinc-900/40 p-[22px] animate-fade" onPointerDown={(event) => { if (event.target === event.currentTarget) onClose() }}>
       <section className="relative w-full max-w-[410px] rounded-2xl bg-white p-8 shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <Button variant="plain" className="absolute right-4 top-3 text-[25px] text-zinc-500" aria-label="Close" onClick={onClose}>×</Button>
-        <div className="font-arial text-[10px] tracking-[1px] text-zinc-500">{eyebrow}</div>
         <h2 id="modal-title" className="my-4 text-[29px] font-semibold tracking-tight">{title}</h2>
         {children}
       </section>

@@ -39,8 +39,9 @@
   }
 
   @keyframes curtain-reveal {
-    from { background-color: #2a9cd3b8; backdrop-filter: blur(7px); }
-    to { background-color: #2a9cd31a; backdrop-filter: blur(0); }
+    from { opacity: 1; background-color: #2a9cd3b8; backdrop-filter: blur(7px); }
+    70% { opacity: 1; }
+    to { opacity: 0; background-color: #2a9cd31a; backdrop-filter: blur(0); }
   }
 
   @keyframes cat-fall {
