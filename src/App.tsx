@@ -41,6 +41,8 @@ export default function App() {
   const [scored, setScored] = useState<Record<number, SetupResult>>({})
   const [invalidPresses, setInvalidPresses] = useState(0)
   const [feedback, setFeedback] = useState<Feedback | null>(null)
+  const [catRain, setCatRain] = useState(false)
+  const [catRainKey, setCatRainKey] = useState(0)
 
   const beginTime = useRef(0)
   const currentLineRef = useRef(-1)
@@ -49,6 +51,7 @@ export default function App() {
   const endedRef = useRef(false)
   const celebrationTimer = useRef<number | undefined>(undefined)
   const feedbackTimer = useRef<number | undefined>(undefined)
+  const catRainTimer = useRef<number | undefined>(undefined)
   const feedbackId = useRef(0)
 
   const runningScore = totalScore(Object.values(scored).map((setup) => setup.points), invalidPresses)
@@ -138,6 +141,14 @@ export default function App() {
   useEffect(() => () => {
     if (celebrationTimer.current !== undefined) window.clearTimeout(celebrationTimer.current)
     if (feedbackTimer.current !== undefined) window.clearTimeout(feedbackTimer.current)
+    if (catRainTimer.current !== undefined) window.clearTimeout(catRainTimer.current)
+  }, [])
+
+  const replayCatWaterfall = useCallback(() => {
+    setCatRain(true)
+    setCatRainKey((key) => key + 1)
+    if (catRainTimer.current !== undefined) window.clearTimeout(catRainTimer.current)
+    catRainTimer.current = window.setTimeout(() => setCatRain(false), 2400)
   }, [])
 
   const startGame = () => {
@@ -217,6 +228,10 @@ export default function App() {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && modal) setModal(null)
+      if (event.code === 'KeyP' && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement) && !(event.target instanceof HTMLElement && event.target.isContentEditable)) {
+        event.preventDefault()
+        replayCatWaterfall()
+      }
       if ((event.code === 'Space' || event.code === 'Enter') && screen === 'playing' && !(event.target instanceof HTMLButtonElement) && !(event.target instanceof HTMLInputElement)) {
         event.preventDefault()
         press()
@@ -224,7 +239,7 @@ export default function App() {
     }
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [modal, screen, press])
+  }, [modal, screen, press, replayCatWaterfall])
 
   if (loadError) {
     return <main className="m-auto max-w-[420px] py-12"><a className="text-[23px] font-bold tracking-tight text-zinc-900 no-underline" href="#">scottle</a><h1 className="mt-8 text-4xl font-semibold">A little pause.</h1><p className="leading-relaxed text-zinc-600">{loadError}</p></main>
@@ -249,14 +264,7 @@ export default function App() {
         {screen === 'start' && <StartScreen title={conversation.title} onStart={startGame} />}
         {screen === 'playing' && (
           <>
-            <div className="relative flex min-h-[58px] items-center justify-between">
-              <span className="font-mono text-[10px] tracking-[.6px] text-zinc-500">{String(currentLine + 1).padStart(2, '0')} <i className="not-italic text-zinc-400">of</i> {String(conversation.lines.length).padStart(2, '0')}</span>
-              <div className="relative flex flex-col items-end gap-px">
-                <strong className="font-mono text-[19px] tracking-tight text-zinc-900">{runningScore}<small className="text-[10px] font-normal tracking-normal text-zinc-500"> / 500</small></strong>
-                {feedback && <span key={feedback.id} className={`absolute right-0 top-full z-10 text-[26px] font-bold animate-score-rise ${feedback.kind === 'good' ? 'text-green-700' : 'text-red-700'}`} aria-live="polite">{feedback.text}</span>}
-              </div>
-            </div>
-            <MessageThread conversation={conversation} lines={visibleLines} currentLine={currentLine} />
+            <MessageThread conversation={conversation} lines={visibleLines} currentLine={currentLine} score={runningScore} feedback={feedback} />
             <div className="h-0.5 overflow-hidden bg-zinc-100" aria-hidden="true"><div className="h-full w-full origin-left bg-scottle transition-transform duration-75" style={{ transform: `scaleX(${1 - lineProgress})` }} /></div>
             <div className="pb-[max(20px,env(safe-area-inset-bottom))] pt-[17px] text-center">
               <Button className={`min-h-16 w-full rounded-[15px] text-base ${feedback?.kind === 'good' ? 'bg-green-700 animate-press' : feedback?.kind === 'bad' ? 'bg-red-700 animate-shake' : ''}`} aria-label="That’s what she said" onPointerDown={pointerPress} onClick={(event) => { if (event.detail === 0) press() }}>
@@ -269,7 +277,7 @@ export default function App() {
         {showResults && result && <Results result={result} currentStreak={streak.current} bestStreak={streak.best} title={conversation.title} />}
       </main>
 
-      {screen === 'celebrating' && <CatWaterfall />}
+      {(screen === 'celebrating' || catRain) && <CatWaterfall key={catRainKey} />}
       {modal === 'help' && <HowToPlayModal onClose={() => setModal(null)} />}
       {modal === 'stats' && <StatsModal current={streak.current} best={streak.best} games={Object.keys(pastResults()).length} onClose={() => setModal(null)} />}
     </div>

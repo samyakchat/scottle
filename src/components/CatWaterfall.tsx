@@ -3,7 +3,7 @@ const cats = ['😹', '😸', '😹', '😂']
 export function CatWaterfall() {
   return (
     <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden 
-    bg-scottle/25 backdrop-blur-[3px] 
+     backdrop-blur-[3px] 
     animate-curtain motion-reduce:flex 
     motion-reduce:flex-wrap motion-reduce:content-center 
     motion-reduce:justify-center motion-reduce:gap-3 motion-reduce:animate-none" 
