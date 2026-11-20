@@ -10,6 +10,7 @@ import { HowToPlayModal, StatsModal } from './components/Modal'
 import { MessageThread } from './components/MessageThread'
 import { Results } from './components/Results'
 import { StartScreen } from './components/StartScreen'
+import { Comments } from './components/Comments'
 
 type Screen = 'start' | 'playing' | 'celebrating' | 'results'
 type ModalName = 'help' | 'stats' | null
@@ -258,6 +259,7 @@ export default function App() {
         <nav className="flex gap-2" aria-label="Game menu">
           <Button variant="plain" className="size-9 rounded-full border border-zinc-200 text-[15px] text-zinc-600 hover:bg-zinc-100" aria-label="Statistics" onClick={() => setModal('stats')}>↗</Button>
           <Button variant="plain" className="size-9 rounded-full border border-zinc-200 text-[15px] text-zinc-600 hover:bg-zinc-100" aria-label="How to play" onClick={() => setModal('help')}>?</Button>
+          <Comments date={date} score={result?.score ?? 0} showPrompt={screen === 'results' && result !== null} />
         </nav>
       </header>
       <main className="flex flex-1 flex-col">

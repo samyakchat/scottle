@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react'
 import { Button } from './Button'
 
-type Props = { title: string; eyebrow: string; onClose: () => void; children: ReactNode }
+type Props = { title: string; eyebrow: string; onClose: () => void; children: ReactNode; showCloseButton?: boolean }
 
-export function Modal({ title, onClose, children }: Props) {
+export function Modal({ title, onClose, children, showCloseButton = false }: Props) {
   return (
     <div className="fixed inset-0 z-20 grid place-items-center bg-zinc-900/40 p-[22px] animate-fade" onPointerDown={(event) => { if (event.target === event.currentTarget) onClose() }}>
       <section className="relative w-full max-w-[410px] rounded-2xl bg-white p-8 shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        {showCloseButton && <button type="button" onClick={onClose} aria-label="Close comments" className="absolute right-4 top-4 grid size-8 place-items-center rounded-full text-xl leading-none text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700">×</button>}
         <h2 id="modal-title" className="my-4 text-[29px] font-semibold tracking-tight">{title}</h2>
         {children}
       </section>
