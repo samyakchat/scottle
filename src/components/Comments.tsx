@@ -132,7 +132,7 @@ export function Comments({ date = getLocalDate(), score = 0, showPrompt = false 
       )}
       {open && (
         <Modal
-          title={promptResolved? "Todays comments": "Add a comment for today"}
+          title={promptResolved? "Todays comments (" + comments.length + ")": "Add a comment for today"}
           eyebrow="Today’s Scottle"
           onClose={dismissPrompt}
           showCloseButton
@@ -146,7 +146,7 @@ export function Comments({ date = getLocalDate(), score = 0, showPrompt = false 
                   value={name}
                   maxLength={30}
                   onChange={(event) => setName(event.target.value)}
-                  placeholder="Anonymous"
+                  placeholder="Default Anonymous"
                 />
               </label>
               <label className="block space-y-1.5 text-xs font-medium text-zinc-600">
