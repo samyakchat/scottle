@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ChartNoAxesColumnIncreasing, CircleQuestionMark } from 'lucide-react'
 import { getLocalDate, getLineDuration, getPuzzleNumber } from './config'
 import { getConversationForDate, type Conversation } from './data/conversations'
 import { judgePress } from './game/engine'
@@ -257,8 +258,8 @@ export default function App() {
               <small className="text-sm text-zinc-500">{dateLabel}</small>
 
         <nav className="flex gap-2" aria-label="Game menu">
-          <Button variant="plain" className="size-9 rounded-full border border-zinc-200 text-[15px] text-zinc-600 hover:bg-zinc-100" aria-label="Statistics" onClick={() => setModal('stats')}>↗</Button>
-          <Button variant="plain" className="size-9 rounded-full border border-zinc-200 text-[15px] text-zinc-600 hover:bg-zinc-100" aria-label="How to play" onClick={() => setModal('help')}>?</Button>
+          <Button variant="plain" className="size-9 rounded-full border border-zinc-200 text-zinc-600 hover:bg-zinc-100" aria-label="Statistics" onClick={() => setModal('stats')}><ChartNoAxesColumnIncreasing size={16} strokeWidth={1.75} aria-hidden="true" /></Button>
+          <Button variant="plain" className="size-9 rounded-full border border-zinc-200 text-zinc-600 hover:bg-zinc-100" aria-label="How to play" onClick={() => setModal('help')}><CircleQuestionMark size={16} strokeWidth={1.75} aria-hidden="true" /></Button>
           <Comments date={date} score={result?.score ?? 0} showPrompt={screen === 'results' && result !== null} />
         </nav>
       </header>

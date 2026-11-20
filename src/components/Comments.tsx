@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Filter } from 'bad-words'
+import { MessageCircle } from 'lucide-react'
 import {
   addDoc,
   collection,
@@ -126,7 +127,7 @@ export function Comments({ date = getLocalDate(), score = 0, showPrompt = false 
           aria-label="View comments"
           onClick={() => setOpen(true)}
         >
-          ☰
+          <MessageCircle size={16} strokeWidth={1.75} aria-hidden="true" />
         </Button>
       )}
       {open && (
