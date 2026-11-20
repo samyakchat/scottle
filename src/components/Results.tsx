@@ -74,7 +74,7 @@ export function Results({ result, currentStreak, bestStreak }: Props) {
             ? "A few good catches."
             : "There’s always tomorrow."}
       </p>
-      <div className="mb-3 overflow-hidden rounded-2xl border border-zinc-200 bg-white ring-1 ring-black/[0.02]">
+      <div className="mb-3 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
         <div className="flex items-center justify-between bg-zinc-900 px-4 py-3">
           <span className="text-xs font-semibold uppercase tracking-widest text-zinc-100">
             Scottle <span className="text-zinc-500">#{result.puzzle}</span>
@@ -100,7 +100,7 @@ export function Results({ result, currentStreak, bestStreak }: Props) {
             {setups.map((setup) => (
               <div
                 key={setup.lineIndex}
-                className={`aspect-square max-w-12 flex-1 rounded-xl shadow-sm ${pointsColor(setup.points)}`}
+                className={`aspect-square max-w-12 flex-1 rounded-xl ${pointsColor(setup.points)}`}
               />
             ))}
           </div>
